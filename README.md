@@ -25,22 +25,54 @@ Then mount and use your current directory and call the tool now encapsulated wit
 
 Any trimmomatic is a java application and running it requires the jar file which is unzipped in this docker -  command can be used to check.
 
+You can test the container by doing the following:
+
+First, make a test directory (just to keep things clean)
 ```bash
-docker run -it -v $PWD:$PWD -w $PWD 
+mkdir test
+cd test
 ```
 
-Using this published release we have to follow the instructions to authenticate with GitHub by using your GitHub token. [Authenticating to the Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
+## Test your docker image
 
-1.  Create your own personal access token
-2.  set an environment variable to your token
+First, let's test to see if the java install in the docker image was successful
+
 ```bash
-export CR_PAT=Your_Token
+docker run -it -v $PWD:$PWD -w $PWD trimmomatic java -version
 ```
-4.  Then on the command line you can 
+
+If successfully installed, the output should look like this:
 ```bash
- echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
- ```
- 
- Then you can use the command to pull the image from the GitHub repository.
- 
+openjdk version "11.0.16" 2022-07-19
+OpenJDK Runtime Environment (build 11.0.16+8-post-Ubuntu-0ubuntu122.04)
+OpenJDK 64-Bit Server VM (build 11.0.16+8-post-Ubuntu-0ubuntu122.04, mixed mode, sharing)
+```
+
+Next, let's check out to see if the trimmomatic is functioning properly.
+
+To do so, we need two test files.   Using from a course taught earlier, [Dry bench skills for the researcher](https://doi.org/10.5281/zenodo.7025773) some nice small test files are available for our use: 
+
+Then download two test files
+```bash
+wget https://zenodo.org/record/7025773/files/test.20k_reads_1.fastq.gz
+wget https://zenodo.org/record/7025773/files/test.20k_reads_2.fastq.gz
+```
+
+Next, referring to the provided manual, provide patterns for the input and the output by providing a template of sort to show the pattern for retrieval.
+
+```bash
+docker run -it -v $PWD:$PWD -w $PWD trimmomatic \
+java -jar /usr/bin/trimmomatic-0.39.jar PE \
+-threads 6 \
+-phred33 \
+-trimlog trimlog.out \
+-basein  "test.20k_reads_1.fastq.gz" \
+-baseout "test.20k_filtered.fastq.gz" \
+ILLUMINACLIP:/usr/bin/TruSeq3-PE.fa:2:30:10 \
+LEADING:3 \
+TRAILING:3 \
+SLIDINGWINDOW:4:15 \
+MINLEN:36
+```
+
  
