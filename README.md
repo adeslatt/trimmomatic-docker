@@ -1,4 +1,4 @@
-[![Docker Image CI](https://github.com/adeslatt/trimmomatic-docker/actions/workflows/docker-image.yml/badge.svg)](https://github.com/adeslatt/trimmomatic-docker/actions/workflows/docker-image.yml)
+[![Docker Image CI](https://github.com/adeslatt/trimmomatic-docker/actions/workflows/docker-image.yml/badge.svg)](https://github.com/adeslatt/trimmomatic-docker/actions/workflows/docker-image.yml)[![Docker](https://github.com/adeslatt/trimmomatic-docker/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/adeslatt/trimmomatic-docker/actions/workflows/docker-publish.yml)
 # trimmomatic-docker
 ## Trimmomatic wget with v0.39
 
