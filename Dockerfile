@@ -1,6 +1,6 @@
 # Full contents of Dockerfile
 FROM ubuntu
-LABEL description="Base docker image with conda and util libraries - also need java"
+LABEL description="Base docker image for trimmomatic -- also needs java"
 ARG ENV_NAME="trimmomatic"
 
 ENV DEBIAN_FRONTEND noninteractive
